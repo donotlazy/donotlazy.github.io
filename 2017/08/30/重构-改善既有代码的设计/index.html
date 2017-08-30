@@ -3,14 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mshen</title>
+  <title>重构-改善既有代码的设计 | mshen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="mshen">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="##前言文章是对书：&amp;lt;重构 改善既有代码的设计&amp;gt;的整理。 重构的好处重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。1.重构改进软件设计2.重构使使软件容易理解3.重构帮助找到bug4.重构提高编程速度 何时重构就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。 代码的坏味道1.重复代码 解决： 重复代码可以提取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重构-改善既有代码的设计">
+<meta property="og:url" content="http://yoursite.com/2017/08/30/重构-改善既有代码的设计/index.html">
 <meta property="og:site_name" content="mshen">
+<meta property="og:description" content="##前言文章是对书：&amp;lt;重构 改善既有代码的设计&amp;gt;的整理。 重构的好处重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。1.重构改进软件设计2.重构使使软件容易理解3.重构帮助找到bug4.重构提高编程速度 何时重构就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。 代码的坏味道1.重复代码 解决： 重复代码可以提取">
+<meta property="og:updated_time" content="2017-08-30T10:54:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mshen">
+<meta name="twitter:title" content="重构-改善既有代码的设计">
+<meta name="twitter:description" content="##前言文章是对书：&amp;lt;重构 改善既有代码的设计&amp;gt;的整理。 重构的好处重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。1.重构改进软件设计2.重构使使软件容易理解3.重构帮助找到bug4.重构提高编程速度 何时重构就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。 代码的坏味道1.重复代码 解决： 重复代码可以提取">
   
     <link rel="alternate" href="/atom.xml" title="mshen" type="application/atom+xml">
   
@@ -59,9 +63,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-重构-改善既有代码的设计" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-重构-改善既有代码的设计" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/08/30/重构-改善既有代码的设计/" class="article-date">
   <time datetime="2017-08-30T10:50:21.000Z" itemprop="datePublished">2017-08-30</time>
@@ -74,8 +76,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/30/重构-改善既有代码的设计/">重构-改善既有代码的设计</a>
+    <h1 class="article-title" itemprop="name">
+      重构-改善既有代码的设计
     </h1>
   
 
@@ -134,55 +136,19 @@ return NO;
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/30/hello-world/" class="article-date">
-  <time datetime="2017-08-30T10:30:58.000Z" itemprop="datePublished">2017-08-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/30/hello-world/">Hello World</a>
-    </h1>
+    <a href="/2017/08/30/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/30/hello-world/" data-id="cj6yxru7f0000t0ub3lk2lt08" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
