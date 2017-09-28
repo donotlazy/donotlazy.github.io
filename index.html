@@ -331,7 +331,7 @@
       
         
           
-            <h1 id="isEqual-和-hash"><a href="#isEqual-和-hash" class="headerlink" title="isEqual 和 hash"></a>isEqual 和 hash</h1><p>记录一下今天下午对这两个方法的学习。</p>
+            <p>记录一下今天下午对这两个方法的学习。</p>
 <h2 id="基础类中的实现"><a href="#基础类中的实现" class="headerlink" title="基础类中的实现"></a>基础类中的实现</h2><p>在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。  </p>
 <pre><code>- (BOOL)isEqual:(id)object {
       return self == object;
@@ -493,7 +493,7 @@ NSValue -isEqualToValue:
       
         
           
-            <p>##前言<br>fjdkfj fjkdjf<br>文章是对书：&lt;重构 改善既有代码的设计&gt;的整理。</p>
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>文章是对书：&lt;重构 改善既有代码的设计&gt;的整理。</p>
 <h3 id="重构的好处"><a href="#重构的好处" class="headerlink" title="重构的好处"></a>重构的好处</h3><p>重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。<br>1.重构改进软件设计<br>2.重构使使软件容易理解<br>3.重构帮助找到bug<br>4.重构提高编程速度</p>
 <h3 id="何时重构"><a href="#何时重构" class="headerlink" title="何时重构"></a>何时重构</h3><p>就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。</p>
 <h3 id="代码的坏味道"><a href="#代码的坏味道" class="headerlink" title="代码的坏味道"></a>代码的坏味道</h3><p>1.重复代码</p>
