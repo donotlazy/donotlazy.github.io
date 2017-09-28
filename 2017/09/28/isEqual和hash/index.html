@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="书籍整理," />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="##前言fjdkfj fjkdjf文章是对书：&amp;lt;重构 改善既有代码的设计&amp;gt;的整理。 重构的好处重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。1.重构改进软件设计2.重构使使软件容易理解3.重构帮助找到bug4.重构提高编程速度 何时重构就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。 代码的坏味道1.重复代码">
-<meta name="keywords" content="书籍整理">
+<meta name="description" content="#isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (N">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重构-改善既有代码的设计">
-<meta property="og:url" content="http://yoursite.com/2017/08/30/重构-改善既有代码的设计/index.html">
+<meta property="og:title" content="isEqual和hash">
+<meta property="og:url" content="http://yoursite.com/2017/09/28/isEqual和hash/index.html">
 <meta property="og:site_name" content="mshen">
-<meta property="og:description" content="##前言fjdkfj fjkdjf文章是对书：&amp;lt;重构 改善既有代码的设计&amp;gt;的整理。 重构的好处重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。1.重构改进软件设计2.重构使使软件容易理解3.重构帮助找到bug4.重构提高编程速度 何时重构就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。 代码的坏味道1.重复代码">
+<meta property="og:description" content="#isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (N">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-30T11:37:26.000Z">
+<meta property="og:updated_time" content="2017-09-28T10:14:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重构-改善既有代码的设计">
-<meta name="twitter:description" content="##前言fjdkfj fjkdjf文章是对书：&amp;lt;重构 改善既有代码的设计&amp;gt;的整理。 重构的好处重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。1.重构改进软件设计2.重构使使软件容易理解3.重构帮助找到bug4.重构提高编程速度 何时重构就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。 代码的坏味道1.重复代码">
+<meta name="twitter:title" content="isEqual和hash">
+<meta name="twitter:description" content="#isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (N">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/30/重构-改善既有代码的设计/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/28/isEqual和hash/"/>
 
 
 
 
 
-  <title>重构-改善既有代码的设计 | mshen</title>
+  <title>isEqual和hash | mshen</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/30/重构-改善既有代码的设计/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/isEqual和hash/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mhen">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">重构-改善既有代码的设计</h1>
+          <h1 class="post-title" itemprop="name headline">isEqual和hash</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T18:50:21+08:00">
-                2017-08-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T18:08:07+08:00">
+                2017-09-28
               </time>
             
 
@@ -330,47 +330,51 @@
       
 
       
-        <p>##前言<br>fjdkfj fjkdjf<br>文章是对书：&lt;重构 改善既有代码的设计&gt;的整理。</p>
-<h3 id="重构的好处"><a href="#重构的好处" class="headerlink" title="重构的好处"></a>重构的好处</h3><p>重构之后软件功能和之前一样，不同的是性能优化了，执行速度快了或者代码易于理解等。<br>1.重构改进软件设计<br>2.重构使使软件容易理解<br>3.重构帮助找到bug<br>4.重构提高编程速度</p>
-<h3 id="何时重构"><a href="#何时重构" class="headerlink" title="何时重构"></a>何时重构</h3><p>就是下面要写的代码的坏味道，这只是一些经验，具体什么时候要重构，要看一个见识广博者的直觉了。</p>
-<h3 id="代码的坏味道"><a href="#代码的坏味道" class="headerlink" title="代码的坏味道"></a>代码的坏味道</h3><p>1.重复代码</p>
-<p><strong>解决：</strong> 重复代码可以提取出一个方法,放到要被调用的类中，或者提炼出一个独立类中。<br><strong>example:</strong><br>//判断字符串是否为空 </p>
-<pre><code>(BOOL)stringIsNull:(NSString *)checkString
-{
-if ((NSNull *)aCheckString == [NSNull null] ||
-aCheckString.length == 0 ||
-[aCheckString isEqualToString:@&quot;&quot;] ||
-[aCheckString isEqualToString:@&quot;&lt;null&gt;&quot;])
-return YES;
-else
-return NO;
+        <p>#isEqual 和 hash<br>记录一下今天下午对这两个方法的学习。</p>
+<h2 id="基础类中的实现"><a href="#基础类中的实现" class="headerlink" title="基础类中的实现"></a>基础类中的实现</h2><p>在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。  </p>
+<pre><code>- (BOOL)isEqual:(id)object {
+      return self == object;
+} 
+</code></pre><p>Person的父类是NSObject,创建Person类</p>
+<pre><code>- (NSUInteger)hash {
+        return [super hash];
 }
-</code></pre><p>2.过长的方法</p>
-<p>拥有短函数的对象会获得比较好、比较长。“间接层”所能带来的全部利益-解释能力、共享能力、选择能力都是由小型函数支持的。<br>文中说，我们可以遵循这样一个原则：每当感觉需要注释来说明点什么的时候，我们就把需要说明的东西写进一个独立函数中，并<strong>以其用途（而非实现方法）</strong>命名<br>（<em>我觉得可以考虑一下，并不绝对</em>）<br><strong>解决：</strong> 分解成若干短函数</p>
-<p>3.过大的类</p>
-<p>类内如果有太多代码，也是代码重复、混乱并最终走向死亡的源头。<br><strong>解决：</strong>可以试着提炼方法，提炼工具类，把数据和UI分开。</p>
-<p>4.过长的参数列</p>
-<p><strong>解决：</strong>太长的参数列会变得难以理解，可以封装成一个对象。</p>
-<p>5.Divergent Change(发散式变化)</p>
-<p>标题的意思是：某个类经常因为不同的原因在不同的方向上发生变化。<br>针对某一外界变化的所有相应修改，都只应该发生在单一类中，而这个类中的所有内容都应该反应此变化。<br><strong>解决：</strong>可以找出某特定原因造成的所有变化，把他们提炼到另一个类中。</p>
-<p>6.Shotgun Surgery(霰弹式修改)</p>
-<p>标题的意思是：每遇到某种变化，你都必须在许多不同的类中做出许多小修改。<br><strong>解决：</strong> 把所需要修改的代码放到同一个类<br>发散式变化是指“一个类受多种变化的影响”，霰弹式变化是指“一种变化引发多个类相应修改”。这两种情况下你都会希望整理代码，使外界变化与“需要修改的类”趋于一一对应。</p>
-<p>7.依恋情结</p>
-<p>如果我们看到某个函数为了计算某个值，从另一个对象那儿调用了几乎半打的取值函数。<br><strong>解决：</strong> 把这个函数移至另一个地点。<br>如果一个函数用到了好几个类的功能。<br><strong>解决：</strong>我们的原则是：判断哪个类拥有最多被此函数使用的数据，然后就把这个函数和那些数据摆在一起。或者将这个函数分解为数个小函数并分别置于不同地点。<br>最根本的原则：数据和引用这些数据的行为总是一起变化的，但也有例外。如果例外出现，我们就搬移那些行为，保持变化只在一地发生。</p>
-<p>8.Data clumps(数据泥团)</p>
-<p>如果两个类中有一些相同的字段，如果删掉其中一项，其他字段不再有意义。你应该为它们创建一个新对象。</p>
-<p>9.基本类型偏执<br>大多数编程华景都有两种数据：结构类型允许你将数据组织成有意义的形式，基本类型则是构成类型的积木块。</p>
-<p>意思是：我们不应该偏执的只使用一些基本类型，我们应该试着创建一些小对象— 像是结合数值和币种的money类、由一个起始值和一个结束值组成的range类。</p>
-<p>10.Switch Statements(switch惊悚现身)</p>
-<p>面向对象的一个最明显的特征就是：少用switch(或case)语句。<br>从本质上说，switch语句的问题在于重复。<br><strong>解决</strong> 用多态来替换它。如果你只是在单一函数中有些选择事例，且不想改变它们，那多态就有点杀鸡用牛刀了。这种情况可以为参数的每个值，建立一个独立函数。</p>
-<p>11.平行继承体系</p>
-<p>每当你为某个类增加一个子类，必须也为另一个类相应增加一个子类。</p>
-<p>12.冗赘类</p>
-<p>每一个类都要去理解它，维护它。如果重构使它身形缩水，不再做那么多工作。或者这个类只是来应付未来的变化，而变化并没有发生。<br><strong>解决：</strong> 将类内联化，或者直接删除掉。</p>
-<p>13.夸夸其谈未来性</p>
-<p>当有人说“噢，我们总有一天需要做这事” 并企图以各式各样的钩子和特殊情况来处理一些非必要的事情，这种坏味道就出现了。 这会造成代码更难理解和维护。<br>如：某个抽象类其实并没有太大作用，如果函数的某些参数未用上。</p>
-<p>14.另人迷惑的暂时字段。</p>
-<p>对象中某个实例变量仅为某种特定情况而设。这样的代码让人不易理解。因为你通常认为对象在所有时候都需要它的所有变量。在变量未被使用的情况下猜测当初其设置目的，会让你发疯的。</p>
+
+Person *person = [[Person alloc] init];
+NSLog(@&quot;person = %ld&quot;, (NSUInteger)person);
+NSLog(@&quot;[person1 getSuperHash] = %ld&quot;, [person     getSuperHash]);
+</code></pre><p>打印结果如下：  </p>
+<pre><code>person = 140643147498880
+[person1 getSuperHash] = 140643147498880
+</code></pre><p>可以看出 NSObject 的hash返回的就是该对象的内存地址。<br>自定义类中重写这两个方法的示例可以参考链接：<br><a href="http://www.jianshu.com/p/915356e280fc" target="_blank" rel="external">iOS开发 之 不要告诉我你真的懂isEqual与hash!</a></p>
+<p>##相等性判断</p>
+<p>在 Foundation 框架中，下面这些 NSObject 的子类都有自己的相等性检查实现，分别使用下面这些方法：</p>
+<pre><code>NSAttributedString -isEqualToAttributedString:
+
+NSData -isEqualToData:
+
+NSDate -isEqualToDate:
+
+NSDictionary -isEqualToDictionary:
+
+NSHashTable -isEqualToHashTable:
+
+NSIndexSet -isEqualToIndexSet:
+
+NSNumber -isEqualToNumber:
+
+NSOrderedSet -isEqualToOrderedSet:
+
+NSSet -isEqualToSet:
+
+NSString -isEqualToString:
+
+NSTimeZone -isEqualToTimeZone:
+
+NSValue -isEqualToValue:
+</code></pre><p>对上面这些类来说，当需要对它们的两个实例进行比较时，推荐使用这些高层方法而不是直接使用 isEqual:。</p>
+<p>##hash的概念</p>
+<p>hash table（也叫散列表）的设计就是为了加快查找速度。<br>它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。<br>详细介绍：<br><a href="http://blog.csdn.net/duan19920101/article/details/51579136" target="_blank" rel="external">哈希表（散列表）原理详解</a><br>NSHipster建议重写hash的时候，使用<br>关键属性的散列值进行一个简单的 XOR操作，可以满足99%的需求了。<br><a href="http://nshipster.cn/equality/" target="_blank" rel="external">Equality</a></p>
 
       
     </div>
@@ -388,7 +392,7 @@ return NO;
       
         <div class="post-tags">
           
-            <a href="/tags/书籍整理/" rel="tag"># 书籍整理</a>
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
           
         </div>
       
@@ -401,8 +405,8 @@ return NO;
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/30/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2017/08/30/重构-改善既有代码的设计/" rel="next" title="重构-改善既有代码的设计">
+                <i class="fa fa-chevron-left"></i> 重构-改善既有代码的设计
               </a>
             
           </div>
@@ -410,10 +414,6 @@ return NO;
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/28/isEqual和hash/" rel="prev" title="isEqual和hash">
-                isEqual和hash <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -538,7 +538,7 @@ return NO;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构的好处"><span class="nav-number">1.</span> <span class="nav-text">重构的好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#何时重构"><span class="nav-number">2.</span> <span class="nav-text">何时重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码的坏味道"><span class="nav-number">3.</span> <span class="nav-text">代码的坏味道</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础类中的实现"><span class="nav-number">1.</span> <span class="nav-text">基础类中的实现</span></a></li></ol></div>
             
 
           </div>
