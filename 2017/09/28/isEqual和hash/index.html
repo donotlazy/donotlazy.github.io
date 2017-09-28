@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="#isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (N">
+<meta name="description" content="isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (NS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="isEqual和hash">
 <meta property="og:url" content="http://yoursite.com/2017/09/28/isEqual和hash/index.html">
 <meta property="og:site_name" content="mshen">
-<meta property="og:description" content="#isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (N">
+<meta property="og:description" content="isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (NS">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-28T10:19:14.000Z">
+<meta property="og:updated_time" content="2017-09-28T10:29:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="isEqual和hash">
-<meta name="twitter:description" content="#isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (N">
+<meta name="twitter:description" content="isEqual 和 hash记录一下今天下午对这两个方法的学习。 基础类中的实现在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。   - (BOOL)isEqual:(id)object {       return self == object; }  Person的父类是NSObject,创建Person类 - (NS">
 
 
 
@@ -329,7 +329,7 @@
       
 
       
-        <p>#isEqual 和 hash<br>记录一下今天下午对这两个方法的学习。</p>
+        <h1 id="isEqual-和-hash"><a href="#isEqual-和-hash" class="headerlink" title="isEqual 和 hash"></a>isEqual 和 hash</h1><p>记录一下今天下午对这两个方法的学习。</p>
 <h2 id="基础类中的实现"><a href="#基础类中的实现" class="headerlink" title="基础类中的实现"></a>基础类中的实现</h2><p>在基类中的实现中，相等性检查本质上就是对本体性的检查，两个NSObject如果指向了同一个内存地址，那它们就被认为是相同的。  </p>
 <pre><code>- (BOOL)isEqual:(id)object {
       return self == object;
@@ -346,8 +346,7 @@ NSLog(@&quot;[person1 getSuperHash] = %ld&quot;, [person     getSuperHash]);
 <pre><code>person = 140643147498880
 [person1 getSuperHash] = 140643147498880
 </code></pre><p>可以看出 NSObject 的hash返回的就是该对象的内存地址。<br>自定义类中重写这两个方法的示例可以参考链接：<br><a href="http://www.jianshu.com/p/915356e280fc" target="_blank" rel="external">iOS开发 之 不要告诉我你真的懂isEqual与hash!</a></p>
-<p>##相等性判断</p>
-<p>在 Foundation 框架中，下面这些 NSObject 的子类都有自己的相等性检查实现，分别使用下面这些方法：</p>
+<h2 id="相等性判断"><a href="#相等性判断" class="headerlink" title="相等性判断"></a>相等性判断</h2><p>在 Foundation 框架中，下面这些 NSObject 的子类都有自己的相等性检查实现，分别使用下面这些方法：</p>
 <pre><code>NSAttributedString -isEqualToAttributedString:
 
 NSData -isEqualToData:
@@ -372,8 +371,7 @@ NSTimeZone -isEqualToTimeZone:
 
 NSValue -isEqualToValue:
 </code></pre><p>对上面这些类来说，当需要对它们的两个实例进行比较时，推荐使用这些高层方法而不是直接使用 isEqual:。</p>
-<p>##hash的概念</p>
-<p>hash table（也叫散列表）的设计就是为了加快查找速度。<br>它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。<br>详细介绍：<br><a href="http://blog.csdn.net/duan19920101/article/details/51579136" target="_blank" rel="external">哈希表（散列表）原理详解</a><br>NSHipster建议重写hash的时候，使用<br>关键属性的散列值进行一个简单的 XOR操作，可以满足99%的需求了。<br><a href="http://nshipster.cn/equality/" target="_blank" rel="external">Equality</a></p>
+<h2 id="hash的概念"><a href="#hash的概念" class="headerlink" title="hash的概念"></a>hash的概念</h2><p>hash table（也叫散列表）的设计就是为了加快查找速度。<br>它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。<br>详细介绍：<br><a href="http://blog.csdn.net/duan19920101/article/details/51579136" target="_blank" rel="external">哈希表（散列表）原理详解</a><br>NSHipster建议重写hash的时候，使用<br>关键属性的散列值进行一个简单的 XOR操作，可以满足99%的需求了。<br><a href="http://nshipster.cn/equality/" target="_blank" rel="external">Equality</a></p>
 
       
     </div>
@@ -531,7 +529,7 @@ NSValue -isEqualToValue:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础类中的实现"><span class="nav-number">1.</span> <span class="nav-text">基础类中的实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#isEqual-和-hash"><span class="nav-number">1.</span> <span class="nav-text">isEqual 和 hash</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础类中的实现"><span class="nav-number">1.1.</span> <span class="nav-text">基础类中的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相等性判断"><span class="nav-number">1.2.</span> <span class="nav-text">相等性判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash的概念"><span class="nav-number">1.3.</span> <span class="nav-text">hash的概念</span></a></li></ol></li></ol></div>
             
 
           </div>
