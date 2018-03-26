@@ -260,6 +260,272 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/自动打包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mshen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/26/自动打包/" itemprop="url">自动打包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T16:02:20+08:00">
+                2018-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###接入流程：</p>
+<p>1.工程名 将xxx替换成自己的工程名<br>project_name=xxx</p>
+<p>scheme名 将xxx替换成自己的sheme名<br>scheme_name=xxx</p>
+<p>2.在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件</p>
+<pre><code>#plist文件所在路径
+exportOptionsPlistPath=${HOME}/&quot;Desktop/ieltsBuild/exportTest.plist&quot;
+</code></pre><p>这个配置文件其实在我们手动打包的目录下是有的，我们copy到shell脚本里写的目录下就可以了。</p>
+<p>3.通知测试这一步，  <br><br><a href="">https://oapi.dingtalk.com/robot/send?a…</a>需要改成为自己创建的机器人url.  <br><br>“atMobiles”:[“185xxxxxxxx”] 里的手机号改成需要通知的人的手机号</p>
+<p>参考文档：</p>
+<p>1.iOS- 一键自动打包发布到Fir和AppStore: <a href="">https://www.jianshu.com/p/05dc9f925467</a><br>2.钉钉自定义机器人文档：<a href="">https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.karFPe&amp;treeId=257&amp;articleId=105735&amp;docType=1</a>  </p>
+<ol>
+<li>蒲公英快速上传文档:<a href="">https://www.pgyer.com/doc/view/upload_one_command</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/python思考/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mshen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/28/python思考/" itemprop="url">python思考</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T23:12:36+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>廖雪峰学习python的官网上有这样一段话：</p>
+<p>#前言<br>“<br>和list比较，dict有以下几个特点：</p>
+<p>查找和插入的速度极快，不会随着key的增加而变慢；<br>需要占用大量的内存，内存浪费多。<br>而list相反：</p>
+<p>查找和插入的时间随着元素的增加而增加；<br>占用空间小，浪费内存很少。<br>所以，dict是用空间来换取时间的一种方法。</p>
+<p>dict可以用在需要高速查找的很多地方，在Python代码中几乎无处不在，正确使用dict非常重要，需要牢记的第一条就是dict的key必须是不可变对象。<br>”<br>上面说字典要占用大量的内存，我就去查了一下python中字典的实现方式：</p>
+<p><a href="http://liuzhijun.iteye.com/blog/2266358" target="_blank" rel="external">http://liuzhijun.iteye.com/blog/2266358</a></p>
+<p>发现讲python字典实现的一篇好文章</p>
+<p><a href="https://harveyqing.gitbooks.io/python-read-and-write/content/" target="_blank" rel="external">python见闻志</a></p>
+<p>总结一下，<br>dict{key:value}<br>key通过hash函数，得到一个数（十进制），跟存储数组的长度 - 1 进行&amp;操作，得到slot索引。<br>如：hash(‘a’) = 398026104856367068<br>如果数组的大小是8<br>hash(‘a’) &amp; 7 = 0;</p>
+<p><img src="/Users/mshen/Desktop/python/hash.png" alt="hash.png"></p>
+<p>图片引用自：<a href="https://harveyqing.gitbooks.io/python-read-and-write/content/" target="_blank" rel="external">https://harveyqing.gitbooks.io/python-read-and-write/content/</a></p>
+<p>如果索引重复，就是用开放寻址法来查找空闲的slot，所以会形成一个探测链，当探测链中某个元素被删除时，不能直接删除，否则探测链就断了，就不能根据探测链来查找删除元素后面的元素了。 删除时通多dummy状态来标志。有三种状态，unused,active,dummy </p>
+<p><strong>Q:像这种探测链确定位置的元素怎么查找到呢？</strong></p>
+<p>先根据hash值来查找，找到一个元素，比较key值，不一样，然后根据探测链往下查找，直到比较key值是一样的，就找到了。</p>
+<p>如果使用了的slots和dummy slots的总量超过了数组大小的2/3则重新调整字典的大小，然后slot索引会重新计算一遍。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/isEqual和hash/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -743,7 +1009,7 @@ return NO;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -756,7 +1022,7 @@ return NO;
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -798,7 +1064,7 @@ return NO;
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
