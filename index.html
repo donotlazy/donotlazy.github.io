@@ -331,13 +331,158 @@
       
         
           
-            <h2 id="接入流程："><a href="#接入流程：" class="headerlink" title="接入流程："></a>接入流程：</h2><h3 id="1-修改工程名"><a href="#1-修改工程名" class="headerlink" title="1.修改工程名"></a>1.修改工程名</h3><p>将xxx替换成自己的工程名<br>project_name=xxx  <br><br>scheme名 将xxx替换成自己的sheme名<br>scheme_name=xxx</p>
+            <h2 id="一：接入流程："><a href="#一：接入流程：" class="headerlink" title="一：接入流程："></a>一：接入流程：</h2><h3 id="1-修改工程名"><a href="#1-修改工程名" class="headerlink" title="1.修改工程名"></a>1.修改工程名</h3><p>将xxx替换成自己的工程名<br>project_name=xxx  <br><br>scheme名 将xxx替换成自己的sheme名<br>scheme_name=xxx</p>
 <h3 id="2-配置文件"><a href="#2-配置文件" class="headerlink" title="2.配置文件"></a>2.配置文件</h3><p>在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件</p>
 <pre><code>#plist文件所在路径
 exportOptionsPlistPath=${HOME}/&quot;Desktop/ieltsBuild/exportTest.plist&quot;
 </code></pre><p>这个配置文件其实在我们手动打包的目录下是有的，我们copy到shell脚本里写的目录下就可以了。</p>
 <h3 id="3-通知测试"><a href="#3-通知测试" class="headerlink" title="3.通知测试"></a>3.通知测试</h3><p><a href="">https://oapi.dingtalk.com/robot/send?a…</a>需要改成为自己创建的机器人url.  <br><br>“atMobiles”:[“185xxxxxxxx”] 里的手机号改成需要通知的人的手机号</p>
-<h2 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h2><p>脚本放到工程目录下，<br>cd 到工程目录下，执行sh autoBuild.sh.</p>
+<h2 id="二：执行脚本"><a href="#二：执行脚本" class="headerlink" title="二：执行脚本"></a>二：执行脚本</h2><p>脚本放到工程目录下，<br>cd 到工程目录下，执行sh autoBuild.sh.</p>
+<h2 id="三：脚本"><a href="#三：脚本" class="headerlink" title="三：脚本"></a>三：脚本</h2><pre><code>
+#使用方法
+
+
+#工程绝对路径
+project_path=$(cd `dirname $0`; pwd)
+
+#echo $project_path
+#工程名 将XXX替换成自己的工程名
+project_name=xxx
+
+#scheme名 将XXX替换成自己的sheme名
+scheme_name=xxx
+
+#打包模式 Debug/Release
+development_mode=Debug
+
+#build文件夹路径
+build_path=${HOME}/"Desktop/ieltsBuild/build"
+#${project_path}/build
+
+#plist文件所在路径
+exportOptionsPlistPath=${HOME}/"Desktop/ieltsBuild/exportTest.plist"
+#${project_path}/exportTest.plist
+#导出.ipa文件所在路径
+exportIpaPath=${HOME}/"Desktop/ieltsBuild/${development_mode}"
+#${project_path}/ipaDir/${development_mode}
+
+
+
+#注释掉，默认是开发模式
+#echo "Place enter the number you want to export ? [ 1:app-store 2:ad-hoc] "
+
+##
+#read number
+#while([[ $number != 1 ]] && [[ $number != 2 ]])
+#do
+#echo "Error! Should enter 1 or 2"
+#echo "Place enter the number you want to export ? [ 1:app-store 2:ad-hoc] "
+#read number
+#done
+
+#if [ $number == 1 ];then
+#development_mode=Release
+#exportOptionsPlistPath=${project_path}/exportAppstore.plist
+#else
+#development_mode=Debug
+#exportOptionsPlistPath=${project_path}/exportTest.plist
+#fi
+
+
+echo '///-----------'
+echo '/// 正在清理工程'
+echo '///-----------'
+xcodebuild \
+clean -configuration ${development_mode} -quiet  || exit
+
+
+echo '///--------'
+echo '/// 清理完成'
+echo '///--------'
+echo ''
+
+echo '///-----------'
+echo '/// 正在编译工程:'${development_mode}
+echo '///-----------'
+xcodebuild \
+archive -workspace ${project_path}/${project_name}.xcworkspace \
+-scheme ${scheme_name} \
+-configuration ${development_mode} \
+-archivePath ${build_path}/${project_name}.xcarchive  -quiet  || exit
+
+echo '///--------'
+echo '/// 编译完成'
+echo '///--------'
+echo ''
+
+echo '///----------'
+echo '/// 开始ipa打包'
+echo '///----------'
+
+xcodebuild -exportArchive -archivePath ${build_path}/${project_name}.xcarchive \
+-configuration ${development_mode} \
+-exportPath ${exportIpaPath} \
+-exportOptionsPlist ${exportOptionsPlistPath}
+#-quiet || exit
+
+if [ -e $exportIpaPath/$scheme_name.ipa ]; then
+echo '///----------'
+echo '/// ipa包已导出'
+echo '///----------'
+#open $exportIpaPath
+else
+echo '///-------------'
+echo '/// ipa包导出失败 '
+echo '///-------------'
+fi
+echo '///------------'
+echo '/// 打包ipa完成  '
+echo '///-----------='
+echo ''
+
+echo '///-------------'
+echo '/// 开始发布ipa包 '
+echo '///-------------'
+
+#if [ $number == 1 ];then
+#
+##验证并上传到App Store
+## 将-u 后面的XXX替换成自己的AppleID的账号，-p后面的XXX替换成自己的密码
+#altoolPath="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Versions/A/Support/altool"
+#"$altoolPath" --validate-app -f ${exportIpaPath}/${scheme_name}.ipa -u XXX -p XXX -t ios --output-format xml
+#"$altoolPath" --upload-app -f ${exportIpaPath}/${scheme_name}.ipa -u  XXX -p XXX -t ios --output-format xml
+#else
+
+echo '///-------------'
+echo '/// 传到蒲公英 '
+echo '///-------------'
+
+# 将XXX替换成自己的Fir平台的token
+#自动上传到蒲公英
+curl -F "file=@$exportIpaPath/$scheme_name.ipa" \
+-F "uKey=xxxx" \
+-F "_api_key=xxxx" \
+https://www.pgyer.com/apiv1/app/upload
+
+echo '///-------------'
+echo '/// 通过钉钉机器人通知测试 '
+echo '///-------------'
+
+//其实就是一个post请求
+curl -X POST -H 'Content-type':'application/json' -d '{"msgtype":"text","text":{"content":"新包打好啦 哒哒哒 "},"at":{"atMobiles":["185xxxxx"],"isAtAll":false}}' https://oapi.dingtalk.com/robot/send?xxxxxx
+echo '///-------------'
+echo '/// 完成 '
+echo '///-------------'
+
+
+#fi  #Shell脚本没有{}括号，所以用fi表示if语句块的结束
+
+exit 0
+
+
+
+</code></pre>
+
 <p>参考文档：</p>
 <p>1.iOS- 一键自动打包发布到Fir和AppStore: <a href="">https://www.jianshu.com/p/05dc9f925467</a><br>2.钉钉自定义机器人文档：<br><a href="">https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.karFPe&amp;treeId=257&amp;articleId=105735&amp;docType=1</a><br>3.蒲公英快速上传文档:<a href="">https://www.pgyer.com/doc/view/upload_one_command</a></p>
 
