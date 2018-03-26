@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="###接入流程： 1.工程名 将xxx替换成自己的工程名project_name=xxx scheme名 将xxx替换成自己的sheme名scheme_name=xxx 2.在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件 #plist文件所在路径 exportOptionsPlistPath=${HOME}/&amp;quot;Desktop/ieltsBuild/exportTest.pl">
+<meta name="description" content="##接入流程： ###1.修改工程名将xxx替换成自己的工程名project_name=xxx  scheme名 将xxx替换成自己的sheme名scheme_name=xxx ####2.配置文件在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件 #plist文件所在路径 exportOptionsPlistPath=${HOME}/&amp;quot;Desktop/ieltsBuild/e">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自动打包">
 <meta property="og:url" content="http://yoursite.com/2018/03/26/自动打包/index.html">
 <meta property="og:site_name" content="mshen">
-<meta property="og:description" content="###接入流程： 1.工程名 将xxx替换成自己的工程名project_name=xxx scheme名 将xxx替换成自己的sheme名scheme_name=xxx 2.在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件 #plist文件所在路径 exportOptionsPlistPath=${HOME}/&amp;quot;Desktop/ieltsBuild/exportTest.pl">
+<meta property="og:description" content="##接入流程： ###1.修改工程名将xxx替换成自己的工程名project_name=xxx  scheme名 将xxx替换成自己的sheme名scheme_name=xxx ####2.配置文件在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件 #plist文件所在路径 exportOptionsPlistPath=${HOME}/&amp;quot;Desktop/ieltsBuild/e">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-26T08:37:34.065Z">
+<meta property="og:updated_time" content="2018-03-26T08:42:03.335Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动打包">
-<meta name="twitter:description" content="###接入流程： 1.工程名 将xxx替换成自己的工程名project_name=xxx scheme名 将xxx替换成自己的sheme名scheme_name=xxx 2.在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件 #plist文件所在路径 exportOptionsPlistPath=${HOME}/&amp;quot;Desktop/ieltsBuild/exportTest.pl">
+<meta name="twitter:description" content="##接入流程： ###1.修改工程名将xxx替换成自己的工程名project_name=xxx  scheme名 将xxx替换成自己的sheme名scheme_name=xxx ####2.配置文件在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件 #plist文件所在路径 exportOptionsPlistPath=${HOME}/&amp;quot;Desktop/ieltsBuild/e">
 
 
 
@@ -329,14 +329,14 @@
       
 
       
-        <p>###接入流程：</p>
-<p>1.工程名 将xxx替换成自己的工程名<br>project_name=xxx</p>
-<p>scheme名 将xxx替换成自己的sheme名<br>scheme_name=xxx</p>
-<p>2.在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件</p>
+        <p>##接入流程：</p>
+<p>###1.修改工程名<br>将xxx替换成自己的工程名<br>project_name=xxx  <br><br>scheme名 将xxx替换成自己的sheme名<br>scheme_name=xxx</p>
+<p>####2.配置文件<br>在下面的路径下（或者自己换个路径也可）换成自己项目的配置文件</p>
 <pre><code>#plist文件所在路径
 exportOptionsPlistPath=${HOME}/&quot;Desktop/ieltsBuild/exportTest.plist&quot;
 </code></pre><p>这个配置文件其实在我们手动打包的目录下是有的，我们copy到shell脚本里写的目录下就可以了。</p>
-<p>3.通知测试这一步，  <br><br><a href="">https://oapi.dingtalk.com/robot/send?a…</a>需要改成为自己创建的机器人url.  <br><br>“atMobiles”:[“185xxxxxxxx”] 里的手机号改成需要通知的人的手机号</p>
+<p>####3.通知测试，  </p>
+<p><a href="">https://oapi.dingtalk.com/robot/send?a…</a>需要改成为自己创建的机器人url.  <br><br>“atMobiles”:[“185xxxxxxxx”] 里的手机号改成需要通知的人的手机号</p>
 <p>参考文档：</p>
 <p>1.iOS- 一键自动打包发布到Fir和AppStore: <a href="">https://www.jianshu.com/p/05dc9f925467</a><br>2.钉钉自定义机器人文档：<a href="">https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.karFPe&amp;treeId=257&amp;articleId=105735&amp;docType=1</a>  </p>
 <ol>
