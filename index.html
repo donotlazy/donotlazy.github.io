@@ -260,6 +260,318 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/26/iOS中正则表达式的用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mshen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/26/iOS中正则表达式的用法/" itemprop="url">iOS中正则表达式的用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T20:46:22+08:00">
+                2018-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-判断字符串是否符合正则"><a href="#1-判断字符串是否符合正则" class="headerlink" title="1.判断字符串是否符合正则"></a>1.判断字符串是否符合正则</h3><pre><code>//------  NSPredicate(谓词)匹配  -----
+NSString *email = @&quot;15173265865&quot;;
+NSString *regex = @&quot;1[358][0-9]{9}&quot; ;
+NSPredicate *predicate = [NSPredicate predicateWithFormat:@&quot;SELF MATCHES %@&quot;, regex];
+NSLog(@&quot;%d&quot;,[predicate evaluateWithObject:email]);//1，如果正则{9}改成{1}，打印结果为0
+</code></pre><h3 id="2-查找满足条件的子字符串"><a href="#2-查找满足条件的子字符串" class="headerlink" title="2.查找满足条件的子字符串"></a>2.查找满足条件的子字符串</h3><h4 id="2-1-NSString的API-rangeOfString：option：查找字符串中满足正则的子字符串"><a href="#2-1-NSString的API-rangeOfString：option：查找字符串中满足正则的子字符串" class="headerlink" title="2.1 NSString的API:rangeOfString：option：查找字符串中满足正则的子字符串"></a>2.1 NSString的API:rangeOfString：option：查找字符串中满足正则的子字符串</h4><pre><code>NSString *searchText = @&quot;15173265132&quot;;
+NSString *regex1 = @&quot;1[358][0-9]{1}&quot; ;
+NSRange range = [searchText rangeOfString:regex1 options:NSRegularExpressionSearch];
+if (range.location != NSNotFound) {
+    NSLog(@&quot;%@&quot;, [searchText substringWithRange:range]); //151，会返回第一个匹配结果的位置
+}
+</code></pre><h4 id="2-2-NSRegularExpressionSearch-替换匹配的子字符串"><a href="#2-2-NSRegularExpressionSearch-替换匹配的子字符串" class="headerlink" title="2.2 NSRegularExpressionSearch 替换匹配的子字符串"></a>2.2 NSRegularExpressionSearch 替换匹配的子字符串</h4><pre><code>NSString *replaceString = [searchText stringByReplacingOccurrencesOfString:regex1 withString:@&quot;&quot; options:NSRegularExpressionSearch range:NSMakeRange(0, searchText.length)];
+NSLog(@&quot;--- :%@&quot;,replaceString); //73265
+</code></pre><h4 id="2-3-enumerateMatchesInString-block的形式，可以得到字符串然后做一些操作"><a href="#2-3-enumerateMatchesInString-block的形式，可以得到字符串然后做一些操作" class="headerlink" title="2.3   enumerateMatchesInString block的形式，可以得到字符串然后做一些操作"></a>2.3   enumerateMatchesInString block的形式，可以得到字符串然后做一些操作</h4><pre><code>NSString *searchText = @&quot;15173261865/18551510506&quot;;
+NSString *regexStr = @&quot;1[358][0-9]{1}&quot;;
+NSError *error;
+NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:regexStr options:NSRegularExpressionCaseInsensitive error:&amp;error];
+if (error) return;
+NSInteger count = [regular numberOfMatchesInString:searchText options:NSMatchingReportCompletion range:NSMakeRange(0, searchText.length)];
+NSLog(@&quot;%d&quot;,count); //4
+
+//也可以用block
+[regular enumerateMatchesInString:searchText options:NSMatchingReportCompletion range:NSMakeRange(0, searchText.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+    NSRange matchRange = result.range;
+    NSLog(@&quot;range:%@&quot;,NSStringFromRange(matchRange));
+    NSString *str = [searchText substringWithRange:matchRange];
+    NSLog(@&quot;%@&quot;,str);
+}];
+/*上面的打印结果：
+2018-06-26 21:19:31.818 DataBaseDemo[18967:563419] range:{0, 3}
+2018-06-26 21:19:31.818 DataBaseDemo[18967:563419] 151
+2018-06-26 21:19:31.818 DataBaseDemo[18967:563419] range:{7, 3}
+2018-06-26 21:19:31.818 DataBaseDemo[18967:563419] 186
+2018-06-26 21:19:31.818 DataBaseDemo[18967:563419] range:{12, 3}
+2018-06-26 21:19:31.818 DataBaseDemo[18967:563419] 185
+2018-06-26 21:19:31.819 DataBaseDemo[18967:563419] range:{16, 3}
+2018-06-26 21:19:31.819 DataBaseDemo[18967:563419] 151
+2018-06-26 21:19:31.819 DataBaseDemo[18967:563419] range:{0, 0}
+*/ 
+</code></pre><h4 id="2-4-matchesInString-直接得到数组"><a href="#2-4-matchesInString-直接得到数组" class="headerlink" title="2.4 matchesInString 直接得到数组"></a>2.4 matchesInString 直接得到数组</h4><pre><code>NSTextCheckingResult *match = [regular firstMatchInString:searchText options:0 range:NSMakeRange(0, [searchText length])];
+  NSLog(@&quot;first-result.range = %@&quot;,NSStringFromRange(match.range)); //first-result.range = {0, 3}
+  NSArray&lt;NSTextCheckingResult *&gt; *resultsSign = [regular matchesInString:string options:0 range:NSMakeRange(0, string.length)];
+</code></pre><h3 id="3-NSDataDetector-这个类是NSRegularExpression的子类，对常用的正则匹配做了封装"><a href="#3-NSDataDetector-这个类是NSRegularExpression的子类，对常用的正则匹配做了封装" class="headerlink" title="3.  NSDataDetector 这个类是NSRegularExpression的子类，对常用的正则匹配做了封装"></a>3.  NSDataDetector 这个类是NSRegularExpression的子类，对常用的正则匹配做了封装</h3><pre><code> NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeAddress | NSTextCheckingTypePhoneNumber | NSTextCheckingTypeLink
+                                                           error:nil];
+//需要检测的字符串
+NSString *testStr = @&quot;有一个网址：wwww.JohnnyLiu.com有 一个电话：15310547654 还有一个地址：北京市大屯街道 你看看这个www.baidu.com/sabc/bnss怎 么样?&quot;;
+[detector enumerateMatchesInString:testStr options:NSMatchingReportCompletion range:NSMakeRange(0, testStr.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+    NSLog(@&quot;result.range = %@&quot;,NSStringFromRange(result.range));
+    if (result.URL) {
+        NSLog(@&quot;url = %@&quot;,result.URL);
+    }
+    if (result.phoneNumber) {
+        NSLog(@&quot;phone = %@&quot;,result.phoneNumber);
+    }
+    if ([result resultType] == NSTextCheckingTypeAddress) {
+
+        NSDictionary&lt;NSString *, NSString *&gt; * addressComponent = [result addressComponents];
+        NSLog(@&quot;城市:%@, 街道:%@&quot;, addressComponent[NSTextCheckingCityKey], addressComponent[NSTextCheckingStreetKey]);
+    }
+}];
+
+/*
+ 打印结果： //不知道为什么，地址没有匹配出来地址
+ 2018-06-26 21:56:22.297 DataBaseDemo[20712:614322] url = http://wwww.JohnnyLiu.com
+ 2018-06-26 21:56:26.319 DataBaseDemo[20712:614322] result.range = {28, 14}
+ 2018-06-26 21:56:26.319 DataBaseDemo[20712:614322] phone = 电话：15310547654
+ 2018-06-26 21:56:26.323 DataBaseDemo[20712:614322] result.range = {63, 24}
+ 2018-06-26 21:56:26.323 DataBaseDemo[20712:614322] url = http://www.baidu.com/sabc/bnss%E6%80%8E
+ 2018-06-26 21:56:26.323 DataBaseDemo[20712:614322] result.range = {0, 0}
+ */
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/16/人类简史有感/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mshen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/16/人类简史有感/" itemprop="url">人类简史有感</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-16T20:00:59+08:00">
+                2018-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###读完这本书，有什么感受？</p>
+<p>&#160; &#160; &#160; &#160;这本书特别宏观，从大约135亿年前宇宙大爆炸讲起，历数人类发展的历史，最后延伸到未来。<br>真的可以说是一本奇书。作者的历史知识非常丰富，某一个历史时期，地球上某个地方在发生着什么历史事件可能对作者来说都是信手拈来。最后看完的时候我又读了一下序，这里说该书的中文版参照的英文版是作者特地为中国读者“量身定做”的，其他国家的版本也是如此，很细心，👍</p>
+<p>第一章：人类一种也没什么特别的动物</p>
+<p>我们与大猿的基因几乎完全相同，我们跟大猩猩有97.7%的相同DNA</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/自动打包/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1150,7 +1462,7 @@ return NO;
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
