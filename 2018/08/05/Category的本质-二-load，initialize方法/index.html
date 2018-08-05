@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="Category的本质&amp;lt;一&amp;gt; 面试题1：Category中有load方法吗？load方法是什么时候调用？ 面试题2：load，initialize的区别是什么？它们在Category中的调用顺序以及出现继承时它们之间的调用过程是怎么样的？ 那么这篇文章主要就是回答这两个问题。 load方法 load方法什么时候调用？ load方法是在runtime加载类和分类的时候调用。 我们创建了一">
+<meta name="description" content="###Category的本质&amp;lt;一&amp;gt;链接：https://www.jianshu.com/p/da463f413de7 总结：  通过runtime加载某个类的所有Category数据。 把所有Category的方法，属性，协议数据合并到一个大数组中，后面参与斌编译的Category数据，会在数组的前面。 将合并后的分类数据(方法，属性，协议)，插入到类原来数据的前面。  分类中的对象方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Category的本质&lt;二&gt;load，initialize方法">
 <meta property="og:url" content="http://yoursite.com/2018/08/05/Category的本质-二-load，initialize方法/index.html">
 <meta property="og:site_name" content="mshen">
-<meta property="og:description" content="Category的本质&amp;lt;一&amp;gt; 面试题1：Category中有load方法吗？load方法是什么时候调用？ 面试题2：load，initialize的区别是什么？它们在Category中的调用顺序以及出现继承时它们之间的调用过程是怎么样的？ 那么这篇文章主要就是回答这两个问题。 load方法 load方法什么时候调用？ load方法是在runtime加载类和分类的时候调用。 我们创建了一">
+<meta property="og:description" content="###Category的本质&amp;lt;一&amp;gt;链接：https://www.jianshu.com/p/da463f413de7 总结：  通过runtime加载某个类的所有Category数据。 把所有Category的方法，属性，协议数据合并到一个大数组中，后面参与斌编译的Category数据，会在数组的前面。 将合并后的分类数据(方法，属性，协议)，插入到类原来数据的前面。  分类中的对象方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-05T03:53:25.225Z">
+<meta property="og:updated_time" content="2018-08-05T04:44:19.050Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Category的本质&lt;二&gt;load，initialize方法">
-<meta name="twitter:description" content="Category的本质&amp;lt;一&amp;gt; 面试题1：Category中有load方法吗？load方法是什么时候调用？ 面试题2：load，initialize的区别是什么？它们在Category中的调用顺序以及出现继承时它们之间的调用过程是怎么样的？ 那么这篇文章主要就是回答这两个问题。 load方法 load方法什么时候调用？ load方法是在runtime加载类和分类的时候调用。 我们创建了一">
+<meta name="twitter:description" content="###Category的本质&amp;lt;一&amp;gt;链接：https://www.jianshu.com/p/da463f413de7 总结：  通过runtime加载某个类的所有Category数据。 把所有Category的方法，属性，协议数据合并到一个大数组中，后面参与斌编译的Category数据，会在数组的前面。 将合并后的分类数据(方法，属性，协议)，插入到类原来数据的前面。  分类中的对象方">
 
 
 
@@ -329,177 +329,28 @@
       
 
       
-        <p>Category的本质&lt;一&gt;</p>
+        <p>###Category的本质&lt;一&gt;<br>链接：<a href="">https://www.jianshu.com/p/da463f413de7</a></p>
+<p><strong>总结：</strong></p>
+<ol>
+<li>通过runtime加载某个类的所有Category数据。</li>
+<li>把所有Category的方法，属性，协议数据合并到一个大数组中，后面参与斌编译的Category数据，会在数组的前面。</li>
+<li>将合并后的分类数据(方法，属性，协议)，插入到类原来数据的前面。</li>
+</ol>
+<p>分类中的对象方法和类方法最终会合并到类中，分类中的对象方法合并到类的类对象中，分类中的类方法合并到类的元类对象中。那么这个合并是什么时候发生的呢？是在编译器编译器就帮我们合并好了吗？<strong>实际上是在运行期，进行的合并</strong>。整个合并的过程是通过runtime进行实现的，最后合并到类对象的方法列表中或者元对象的方法列表中。</p>
+<p>下面我们通过将Objective-c的代码转化为c++的源码窥探一下Category的底层结构。我们在命令行进入到存放Person+Test.m这个文件的文件夹中，然后在命令行输入clang -rewrite-objc Person+Test.m,这样Person+Test.m这个文件就被转化为了c++的源码Person+Test.cpp。</p>
+<p>合并的时候并不是覆盖，只是在类对象的方法列表中，分类的方法数组被copy放到了列表中原有方法的前面。查找方法的时候总是先查找到分类中最后参与编译的方法。（在Compile Sources靠后的就是后编译的）</p>
+<p>Category的本质&lt;二&gt;load，initialize方法<br>链接：<a href="">https://www.jianshu.com/p/b5492c40fe8f</a></p>
 <p>面试题1：Category中有load方法吗？load方法是什么时候调用？</p>
 <p>面试题2：load，initialize的区别是什么？它们在Category中的调用顺序以及出现继承时它们之间的调用过程是怎么样的？</p>
 <p>那么这篇文章主要就是回答这两个问题。</p>
-<p>load方法</p>
-<p>load方法什么时候调用？</p>
-<p>load方法是在runtime加载类和分类的时候调用。</p>
-<p>我们创建了一个Person类和它的两个分类，然后重写了各自的load方法：</p>
-<p>//Person</p>
-<ul>
-<li>(void)load{</li>
-</ul>
-<p>NSLog(@”Person + load”);<br>}</p>
-<p>//Person+Test1</p>
-<ul>
-<li>(void)load{</li>
-</ul>
-<p>NSLog(@”Person (Test1) + load”);<br>}</p>
-<p>//Person+Test2</p>
-<ul>
-<li>(void)load{</li>
-</ul>
-<p>NSLog(@”Person (Test2) + load”);<br>}</p>
-<p>然后我们什么也不做，运行代码，看到打印结果：</p>
-<p>2018-07-24 20:45:08.369170+0800 interview - Category[14157:409819] Person + load<br>2018-07-24 20:45:08.371806+0800 interview - Category[14157:409819] Person (Test1) + load<br>2018-07-24 20:45:08.373190+0800 interview - Category[14157:409819] Person (Test2) + load</p>
-<p>通过打印结果我们可以看到Person及其分类的load方法都被调用了，这就证实了load方法是由runtime加载类和分类的时候调用的。</p>
-<p>然后我们再给Person类及其子类创建一个+ (void)test方法并实现它：</p>
-<p>//Person</p>
-<ul>
-<li>(void)test{</li>
-</ul>
-<p>NSLog(@”Person + test”);<br>}</p>
-<p>//Person+Test1</p>
-<ul>
-<li>(void)test{</li>
-</ul>
-<p>NSLog(@”Person (Test1) + test”);<br>}</p>
-<p>//Person+Test2</p>
-<ul>
-<li>(void)test{</li>
-</ul>
-<p>NSLog(@”Person (Test2) + test”);<br>}</p>
-<p>然后用Person类对象去调用test方法：</p>
-<p>[Person test];</p>
-<p>得到打印结果：</p>
-<p>2018-07-24 21:07:32.886316+0800 interview - Category[14670:428685] Person + load<br>2018-07-24 21:07:32.887195+0800 interview - Category[14670:428685] Person (Test1) + load<br>2018-07-24 21:07:32.887461+0800 interview - Category[14670:428685] Person (Test2) + load<br>2018-07-24 21:07:33.050735+0800 interview - Category[14670:428685] Person (Test2) + test</p>
-<p>通过打印结果我们可以看到，Person (Test2)的test方法被调用了，这个很好理解因为我们在Category的本质&lt;一&gt;中说的很清楚了，如果分类和类同时实现了一个方法，那么分类中的方法和类中的方法都会保存下来存入内存中，并且分类的方法在前，类的方法在后，这样在调用的时候就会首先找到分类的方法，给人的感觉就是好像类的方法被覆盖了。</p>
-<p>那么问题来了，同样是类方法，同样是分类中实现了类的方法，为什么load方法不像test方法一样，调用分类的实现，而是类和每个分类中的load方法都被调用了呢？load方法到底有什么不同呢？</p>
-<p>要想弄清楚其中的原理，我们还是要从runtime的源码入手：</p>
-<p>1.找到objc-os.mm这个文件，然后找到这个文件的void _objc_init(void)这个方法，runtime的初始化都是在这个方法里面完成。</p>
-<p>2.这个方法的最后一行调用了函数_dyld_objc_notify_register(&amp;map_images, load_images, unmap_image);,我们点进load_images，这是加载模块的意思。</p>
-<p>3.</p>
-<p>4</p>
-<p>5我们点进call_class_loads();这个方法查看对类的load方法的调用过程：</p>
-<p>6.然后我们再点进call_category_loads()查看对分类的load方法的调用过程：</p>
-<p>那么这样我们就搞清楚了为什么load方法不是像test方法一样，执行分类的实现</p>
-<p>因为load方法的调用并不是objc_msgSend机制，它是直接找到类的load方法的地址，然后调用类的load方法，然后再找到分类的load方法的地址，再去调用它。</p>
-<p>而test方法是通过消息机制去调用的。首先找到类对象，由于test方法是类方法，存储在元类对象中，所以通过类对象的isa指针找到元类对象，然后在元类对象中寻找test方法，由于分类也实现了test方法，所以分类的test方法是在类的test方法的前面，首先找到了分类的test方法，然后去调用它。</p>
-<p>有继承关系时load方法的调用顺序</p>
-<p>通过上面的分析我们确定了load方法的一个调用规则：先调用所有类的load方法，然后再调用所有分类的load方法。</p>
-<p>下面我们再创建一个Student类继承自Person类，并且为Student类创建两个子类Student (Test1), Student (Test2),并且覆写load方法：</p>
-<p>//Student</p>
-<ul>
-<li>(void)load{</li>
-</ul>
-<p>NSLog(@”Student + load”);<br>}</p>
-<p>//Student (Test1)</p>
-<ul>
-<li>(void)load{</li>
-</ul>
-<p>NSLog(@”Student (Test1) + load”);<br>}</p>
-<p>//Student (Test2)</p>
-<ul>
-<li>(void)load{</li>
-</ul>
-<p>NSLog(@”Student (Test2) + load”);<br>}</p>
-<p>然后我们运行一下程序，看打印结果：</p>
-<p>2018-07-25 15:45:58.605156+0800 interview - Category[13869:359239] Person + load<br>2018-07-25 15:45:58.605684+0800 interview - Category[13869:359239] Student + load<br>2018-07-25 15:45:58.606420+0800 interview - Category[13869:359239] Student (Test2) + load<br>2018-07-25 15:45:58.606870+0800 interview - Category[13869:359239] Person (Test1) + load<br>2018-07-25 15:45:58.607293+0800 interview - Category[13869:359239] Student (Test1) + load<br>2018-07-25 15:45:58.607514+0800 interview - Category[13869:359239] Person (Test2) + load<br>2018-07-25 15:45:58.812025+0800 interview - Category[13869:359239] Person (Test2) + test</p>
-<p>通过打印结果我们可以很清楚的看见，Person类和Student类的load方法先被调用，然后调用分类的load方法。再运行多次，都是Person类和Student类的load方法先被调用，然后分类的方法才被调用。并且总是Person类的load在Student类的load方法前面被调用，这会不会和编译顺序有关呢？我们改变一下编译顺序看看：</p>
-<p>TARGETS -&gt; Build Phases -&gt; Complle Sources中文件的放置顺序就是文件的编译顺序。</p>
-<p>目前是Person类在Student类的前面编译，现在我们把Student类放到Person类的前面编译：</p>
-<p>然后我们再运行一下程序，查看打印结果：</p>
-<p>2018-07-25 15:56:07.270034+0800 interview - Category[14070:367686] Person + load<br>2018-07-25 15:56:07.270619+0800 interview - Category[14070:367686] Student + load<br>2018-07-25 15:56:07.271107+0800 interview - Category[14070:367686] Student (Test2) + load<br>2018-07-25 15:56:07.271494+0800 interview - Category[14070:367686] Person (Test1) + load<br>2018-07-25 15:56:07.271762+0800 interview - Category[14070:367686] Student (Test1) + load<br>2018-07-25 15:56:07.272118+0800 interview - Category[14070:367686] Person (Test2) + load<br>2018-07-25 15:56:07.433068+0800 interview - Category[14070:367686] Person (Test2) + test</p>
-<p>我们发现还是Person类的load方法在Student类前面被调用，所以好像和编译顺序无关呀。那么我们就需要思考一下是不是由于Student和Person之间的继承关系导致的呢？</p>
-<p>为了搞清楚这个问题，我们只能从runtime的源码入手。</p>
-<p>1.objc-os.mm中void _objc_init(void)这个入口方法，点进load_images.</p>
-<p>2.在void load_images(const char <em>path __unused, const struct mach_header </em>mh)这个方法中，最后有个call_load_methods();方法，点击进去。</p>
-<p>3.在void call_load_methods(void)这个方法中，找到call_class_loads();这个方法，上面已经讲到，这是调用类的load方法。点进去。</p>
-<p>4</p>
-<p>5.为了搞清楚这里的classes数组的来历，我们回退到void load_images(const char <em>path __unused, const struct mach_header </em>mh)这个方法，这个方法中有一个prepare_load_methods((const headerType *)mh);这个方法，根据方法名可能和我们的问题有关。因此我们点进这个方法查看一下</p>
-<p>6.</p>
-<p>7.点进</p>
-<p>schedule_class_load(remapClass(classlist[i]));</p>
-<p>这个方法：</p>
-<p>通过这个方法我们就可以很清晰的看到，当要把一个类加入最终的这个classes数组的时候，会先去上溯这个类的父类，先把父类加入这个数组。</p>
-<p>由于在classes数组中父类永远在子类的前面，所以在加载类的load方法时一定是先加载父类的load方法，再加载子类的load方法。</p>
-<p>类的load方法调用顺序搞清楚了我们再来看一下分类的load方法调用顺序</p>
-<p>我们还是看一下void prepare_load_methods(const headerType *mhdr)这个函数</p>
-<p>通过这个分析我们就能知道，分类的load方法加载顺序很简单，就是谁先编译的，谁的load方法就被先加载。</p>
-<p>下面我们通过打印结果验证一下，这是编译顺序：</p>
-<p>按照我们前面的分析，load方法的调用顺序应该是：</p>
-<p>Person -&gt; Student -&gt; Person + Test1 -&gt; Student + Test2 -&gt; Student + Test1 -&gt; Person + Test2。</p>
-<p>我们看一下打印结果：</p>
-<p>2018-07-25 16:48:10.271679+0800 interview - Category[15094:408222] Person + load<br>2018-07-25 16:48:10.272357+0800 interview - Category[15094:408222] Student + load<br>2018-07-25 16:48:10.272661+0800 interview - Category[15094:408222] Person (Test1) + load<br>2018-07-25 16:48:10.272872+0800 interview - Category[15094:408222] Student (Test2) + load<br>2018-07-25 16:48:10.273103+0800 interview - Category[15094:408222] Student (Test1) + load<br>2018-07-25 16:48:10.273434+0800 interview - Category[15094:408222] Person (Test2) + load<br>2018-07-25 16:48:10.441457+0800 interview - Category[15094:408222] Person (Test2) + test</p>
-<p>打印结果完美的验证了我们的结论。</p>
-<p>总结 load方法调用顺序</p>
+<p>有load方法。因为load方法的调用并不是objc_msgSend机制，它是直接找到类的load方法的地址，然后调用类的load方法，然后再找到分类的load方法的地址，再去调用它。</p>
 <p>1.先调用类的load方法</p>
-<p>按照编译先后顺序调用(先编译，先调用)</p>
 <p>调用子类的load方法之前会先调用父类的load方法</p>
 <p>2.再调用分类的load方法</p>
 <p>按照编译先后顺序，先编译，先调用</p>
-<p>initialize方法</p>
-<p>initialize方法的调用时机</p>
-<p>initialize在类第一次接收到消息时调用，也就是objc_msgSend()。</p>
-<p>先调用父类的+initialize，再调用父类的initialize。</p>
-<p>我们首先给Student类和Person类覆写+initialize方法：</p>
-<p>//Person</p>
-<ul>
-<li>(void)initialize{</li>
-</ul>
-<p>NSLog(@”Person + initialize”);<br>}</p>
-<p>//Person+Test1</p>
-<ul>
-<li>(void)initialize{</li>
-</ul>
-<p>NSLog(@”Person (Test1) + initialize”);<br>}</p>
-<p>//Person+Test2</p>
-<ul>
-<li>(void)initialize{</li>
-</ul>
-<p>NSLog(@”Person (Test2) + initialize”);<br>}</p>
-<p>//Student</p>
-<ul>
-<li>(void)initialize{</li>
-</ul>
-<p>NSLog(@”Student + initialize”);<br>}</p>
-<p>//Student (Test1)</p>
-<ul>
-<li>(void)initialize{</li>
-</ul>
-<p>NSLog(@”Student (Test1) + initialize”);<br>}</p>
-<p>//Student (Test2)</p>
-<ul>
-<li>(void)initialize{</li>
-</ul>
-<p>NSLog(@”Student (Test2) + initialize”);<br>}</p>
-<p>我们运行程序，发现什么也没有打印，说明在运行期没有调用+initialize方法。</p>
-<p>然后我们给Person类发送消息，也就是调用函数：</p>
-<p>[Person alloc];</p>
-<p>打印结果：</p>
-<p>2018-07-25 17:26:22.462601+0800 interview - Category[15889:437305] Person (Test2) + initialize</p>
-<p>可以看到调用了Person类的分类的initialize方法。通过这个打印结果我们能看出initialize方法和load方法的不同，load方法由于是直接获取方法的地址，然后调用方法，所以Person及其分类的load方法都会调用。而initialize方法则更像是通过消息机制，也即是objc_msgend(Person, @selector(initialize))这种来调用的。</p>
-<p>然后我多次调用alloc方法：</p>
-<p>[Person alloc];<br>[Person alloc];<br>[Person alloc];</p>
-<p>打印结果：</p>
-<p>018-07-25 17:26:22.462601+0800 interview - Category[15889:437305] Person (Test2) + initialize</p>
-<p>可见initialize方法只在类第一次收到消息时调用。然后我们再给Student类发送消息：</p>
-<p>[Student alloc];</p>
-<p>打印结果：</p>
-<p>2018-07-25 18:34:14.648279+0800 interview - Category[17187:473502] Person (Test2) + initialize<br>2018-07-25 18:34:14.648394+0800 interview - Category[17187:473502] Student (Test1) + initialize</p>
-<p>我们看到不仅调用了Student类的initialize方法，而且还调用了Student类的父类，Person类的方法，因此我们猜测在调用类的initialize方法之前会先调用父类的initialize方法。</p>
-<p>以上仅仅是我们根据打印结果的猜测，还需要通过源码来验证。</p>
-<p>[Person alloc]就相当于objc_msgSend([Person class], @selector(alloc)),说明objc_msgSend()内部会去调用initialize方法，判断是第几次接收到消息。</p>
-<p>1.我们去runtime源码中搜索class_getClassmethod方法，会在objc-class.mm这个文件中找到这个方法的实现：</p>
-<p>2.我们点进class_getInstanceMethod(cls-&gt;getMeta(), sel);这个方法：</p>
-<p>3.点进这个方法：</p>
-<p>4.继续寻找lookUpImpOrForward这个方法的实现，我截取其中有价值的代码块：</p>
-<p>这个代码也说明了每个类的+initialize方法只会被调用一次。</p>
-<p>5.我们点进_class_initialize (_class_getNonMetaClass(cls, inst));寻找真正的实现：</p>
-<p>6.然后我们通过callInitialize(cls);查看具体的调</p>
-<p>这样一来+initialize方法的调用过程就很清楚了。</p>
+<p>load方法什么时候调用？</p>
+<p>load方法是在runtime加载类和分类的时候调用。</p>
+<p><strong>initialize在类第一次接收到消息时调用，也就是objc_msgSend()。</strong></p>
 <p>+initialize的调用过程：</p>
 <p>1查看本类的initialize方法有没有实现过，如果已经实现过就返回，不再实现。</p>
 <p>2.如果本类没有实现过initialize方法，那么就去递归查看该类的父类有没有实现过initialize方法，如果没有实现就去实现，最后实现本类的initialize方法。并且initialize方法是通过objc_msgSend()实现的。</p>
@@ -518,19 +369,11 @@
 <p>objc_msgSend([Person class], @selector(initialize));<br>personinitialized = YES;<br>}<br>//利用objc_msgSend调用Teacher类的initialize方法<br>objc_msgSend([Teacher class], @selector(initialize));<br>//变更状态<br>teacherInitialized = YES;<br>}</p>
 <p>上面列出来的是调用initialize的伪代码，下面再详细说明这个过程：</p>
 <p>1.Student类收到alloc消息，开始着手准备调用initialize方法。首先判断自己有没有初始化过。</p>
-<p>2.判断自己没有初始化过，所以就去找自己的父类Person类，看Person类有没有初始化过，发现Person类也没有初始化过，且Person类也没有父类，多以对Person类使用objc_msgSend([Person class], @selector(initialize))调用Person类的initialize方法。这是第一次调用Person类的initialize方法。</p>
+<p>2.判断自己没有初始化过，所以就去找自己的父类Person类，看Person类有没有初始化过，发现Person类也没有初始化过，且Person类也没有父类，所以对Person类使用objc_msgSend([Person class], @selector(initialize))调用Person类的initialize方法。这是第一次调用Person类的initialize方法。</p>
 <p>3.父类处理完后，再通过objc_msgSend([Student class], @selector(initialize));调用Student类的initialize方法，但是由于Student类没有实现initialize方法，所以通过其superclass指针找到父类Person类，然后调用了Person类的initialize实现。这是第二次调用Person类的initialize方法。</p>
-<p>4.Teacher类收到alloc方法，开始准备调用initialize放啊发。首先判断自己有没有被初始化过。</p>
+<p>4.Teacher类收到alloc方法，开始准备调用initialize方法。首先判断自己有没有被初始化过。</p>
 <p>5.判断自己没有被初始化过后，又开始判断其父类Person类有没有被初始化过，刚刚父类Person类已经被初始化过。</p>
 <p>6.于是通过objc_msgSend([Teacher class], @selector(initialize))调用Teacher类的initialize方法。但是由于Teacher类没有实现initialize方法，所以只能通过superclass指针去查找父类有没有实现initialize方法，发现父类Person类实现了initialize方法，于是调用父类的initialize方法。这是第三次调用Person类的initialize方法。</p>
-<p>作者：雪山飞狐_91ae</p>
-<p>链接：<a href="https://www.jianshu.com/p/b5492c40fe8f" target="_blank" rel="external">https://www.jianshu.com/p/b5492c40fe8f</a></p>
-<p>相关推荐：</p>
-<p>Category的本质&lt;一&gt;</p>
-<p>iOS valueForKeyPath常用用法</p>
-<p>一种简单的 iOS 的组件化设计</p>
-<p>阅读原文</p>
-<p>微信扫一扫<br>关注该公众号</p>
 
       
     </div>
