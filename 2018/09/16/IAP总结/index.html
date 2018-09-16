@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="mshen">
 <meta property="og:description" content="IAP准备工作 申请沙盒账号 （可以同时给测试也创建一个）邮箱ID可以填一个不存在的邮箱， 填写银行、财务信息（这个我没有实际操作） 创建一个购买商品  流程 请求商品ID (商品ID放到服务器) 根据根据这个商品ID去获取商品信息（不同的地区显示不同的货币符号和价格） 请求订单ID,每次支付之前都要请求获取一个订单ID（服务器生成的） 根据之前步骤的信息去发起支付。 根据苹果的回调状态去处理支付">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-16T09:19:07.170Z">
+<meta property="og:updated_time" content="2018-09-16T09:21:08.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IAP总结">
 <meta name="twitter:description" content="IAP准备工作 申请沙盒账号 （可以同时给测试也创建一个）邮箱ID可以填一个不存在的邮箱， 填写银行、财务信息（这个我没有实际操作） 创建一个购买商品  流程 请求商品ID (商品ID放到服务器) 根据根据这个商品ID去获取商品信息（不同的地区显示不同的货币符号和价格） 请求订单ID,每次支付之前都要请求获取一个订单ID（服务器生成的） 根据之前步骤的信息去发起支付。 根据苹果的回调状态去处理支付">
@@ -342,8 +342,7 @@
 <li>根据苹果的回调状态去处理支付状态。</li>
 <li>如果支付成功，去服务器进行验证，并且以服务器的验证结果为准。</li>
 </ol>
-<p>##遇到的问题和异常：</p>
-<ol>
+<h2 id="遇到的问题和异常："><a href="#遇到的问题和异常：" class="headerlink" title="遇到的问题和异常："></a>遇到的问题和异常：</h2><ol>
 <li><p>跟服务器验证的请求，需要传一个receipt，但是后端一直返回21002，说receipt格式错误</p>
 <p><strong>解决：</strong> 后端想办法解决的，编码的问题。</p>
 </li>
@@ -371,8 +370,7 @@ if ([SKPaymentQueue defaultQueue].transactions.count &gt; 0)                    
 }
 </code></pre></li>
 </ol>
-<p>##资料</p>
-<ol>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><ol>
 <li><p><a href="https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Chapters/ShowUI.html#//apple_ref/doc/uid/TP40008267-CH3-SW11" target="_blank" rel="external">In-App Purchase Programming Guide（《App 内购买项目编程指南》）</a></p>
 </li>
 <li><p><a href="https://help.apple.com/app-store-connect/#/dev7e89e149d" target="_blank" rel="external">APP Store Connect 帮助</a></p>
@@ -538,7 +536,7 @@ if ([SKPaymentQueue defaultQueue].transactions.count &gt; 0)                    
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IAP准备工作"><span class="nav-number">1.</span> <span class="nav-text">IAP准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">2.</span> <span class="nav-text">流程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IAP准备工作"><span class="nav-number">1.</span> <span class="nav-text">IAP准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">2.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题和异常："><span class="nav-number">3.</span> <span class="nav-text">遇到的问题和异常：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资料"><span class="nav-number">4.</span> <span class="nav-text">资料</span></a></li></ol></div>
             
 
           </div>
